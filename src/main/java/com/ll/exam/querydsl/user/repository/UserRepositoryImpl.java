@@ -18,11 +18,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         WHERE id = 1
         */
 
+        QSiteUser qSiteUser = QSiteUser.siteUser;
 
         return jpaQueryFactory
-                .select(QSiteUser.siteUser)
-                .from(QSiteUser.siteUser)
-                .where(QSiteUser.siteUser.id.eq(1L))
+                .select(qSiteUser)
+                .from(qSiteUser)
+                .where(qSiteUser.id.eq(1L))
                 .fetchOne();
 
 
