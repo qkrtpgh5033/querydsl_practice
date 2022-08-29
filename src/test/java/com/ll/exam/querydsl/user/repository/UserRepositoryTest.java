@@ -65,7 +65,7 @@ class UserRepositoryTests {
             System.out.println("siteUser.getId() = " + siteUser.getId());
         }
         SiteUser lastUser = list.get(list.size() - 1);
-        assertThat(lastUser.getId()).isEqualTo(1L);
+        assertThat(lastUser.getId()).isEqualTo(4L);
         
     }
 }

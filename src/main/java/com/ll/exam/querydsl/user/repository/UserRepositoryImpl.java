@@ -59,7 +59,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         List<SiteUser> list = jpaQueryFactory
                 .select(qSiteUser)
                 .from(qSiteUser)
-                .orderBy(qSiteUser.id.desc())
+                .orderBy(qSiteUser.id.asc())
                 .fetch();
 
         return list;
