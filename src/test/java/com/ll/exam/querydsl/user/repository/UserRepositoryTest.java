@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,5 +57,16 @@ class UserRepositoryTests {
         assertThat(findUser.getUsername()).isEqualTo("user1");
     }
 
+    @Test
+    @DisplayName("전체회원, 오래된 순 ")
+    void allUser_Order(){
+        List<SiteUser> list = userRepository.getQslOrderAll();
+        for (SiteUser siteUser : list) {
+            System.out.println("siteUser.getId() = " + siteUser.getId());
+        }
+        SiteUser lastUser = list.get(list.size() - 1);
+        assertThat(lastUser.getId()).isEqualTo(1L);
+        
+    }
 }
 

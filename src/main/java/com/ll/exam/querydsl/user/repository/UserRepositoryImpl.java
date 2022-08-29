@@ -6,6 +6,8 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
@@ -49,6 +51,18 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return siteUser;
 
+
+    }
+
+    @Override
+    public List<SiteUser> getQslOrderAll() {
+        List<SiteUser> list = jpaQueryFactory
+                .select(qSiteUser)
+                .from(qSiteUser)
+                .orderBy(qSiteUser.id.desc())
+                .fetch();
+
+        return list;
 
     }
 
