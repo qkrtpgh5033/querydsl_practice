@@ -4,4 +4,7 @@ import com.ll.exam.querydsl.user.entity.SiteUser;
 
 public interface UserRepositoryCustom {
     SiteUser getQslUser(Long id);
+    Long getQslCount();
+
+    SiteUser getQslOrderUser();
 }

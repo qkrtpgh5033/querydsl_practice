@@ -33,11 +33,28 @@ class UserRepositoryTests {
 
     @Test
     @DisplayName("회원 찾기")
-    void find(){
+    void find() {
         SiteUser qslUser = userRepository.getQslUser(1L);
         System.out.println("qslUser.getUsername() = " + qslUser.getUsername());
         assertThat(qslUser.getUsername()).isEqualTo("user1");
 
     }
+
+    @Test
+    @DisplayName("모든 회원의 수")
+    void count() {
+        Long qslCount = userRepository.getQslCount();
+        assertThat(qslCount).isEqualTo(2);
+
+    }
+
+    @Test
+    @DisplayName("가장 오래된 회원")
+    void orderUser() {
+        SiteUser findUser = userRepository.getQslOrderUser();
+        System.out.println(findUser.getUsername());
+        assertThat(findUser.getUsername()).isEqualTo("user1");
+    }
+
 }
 
