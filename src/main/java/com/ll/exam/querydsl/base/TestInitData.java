@@ -30,23 +30,10 @@ public class TestInitData {
                     .email("user2@test.com")
                     .build();
 
-            SiteUser u3 = SiteUser.builder()
-                    .username("user3")
-                    .password("{noop}1234")
-                    .email("user3@test.com")
-                    .build();
-
-            SiteUser u4 = SiteUser.builder()
-                    .username("user4")
-                    .password("{noop}1234")
-                    .email("user4@test.com")
-                    .build();
 
             List <SiteUser> list = new ArrayList<>();
             list.add(u1);
             list.add(u2);
-            list.add(u3);
-            list.add(u4);
 
             List<SiteUser> siteUsers = userRepository.saveAll(list);
 
@@ -55,3 +42,6 @@ public class TestInitData {
 
 
 }
+
+
+
