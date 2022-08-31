@@ -1,6 +1,7 @@
 package com.ll.exam.querydsl.user.repository;
 
 import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
+import com.ll.exam.querydsl.interestkeyword.entity.QInterestKeyword;
 import com.ll.exam.querydsl.user.entity.QSiteUser;
 import com.ll.exam.querydsl.user.entity.SiteUser;
 import com.querydsl.core.types.Order;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 import static com.ll.exam.querydsl.user.entity.QSiteUser.siteUser;
@@ -115,10 +117,28 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public List<SiteUser> searchInterest(String interest) {
+        /**
+         * select U.id
+         * from site_user AS U
+         * INNER JOIN site_user_interest_keywords AS SUIK
+         * on U.id = SUIK.site_user_id
+         * INNER JOIn interest_keyword as IK
+         * ON IK.content = SUIK.interest_keywords_content
+         * WHERE IK.CONTENT = "축구";
+         */
+//        List<SiteUser> find = jpaQueryFactory
+//                .select(qSiteUser)
+//                .from(qSiteUser)
+//                .where(qSiteUser.interestKeywords.contains(new InterestKeyword(interest)))
+//                .fetch();
+
+        QInterestKeyword IK = new QInterestKeyword("IK"); // AS 역할
         List<SiteUser> find = jpaQueryFactory
                 .select(qSiteUser)
                 .from(qSiteUser)
-                .where(qSiteUser.interestKeywords.contains(new InterestKeyword(interest)))
+                .innerJoin(qSiteUser.interestKeywords, IK)
+                .where(
+                        IK.content.eq(interest))
                 .fetch();
 
         return find;
