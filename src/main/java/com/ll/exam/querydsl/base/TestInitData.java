@@ -30,17 +30,21 @@ public class TestInitData {
                     .email("user2@test.com")
                     .build();
 
-            u1.addInterestKeywordContent("축구");
-            u1.addInterestKeywordContent("농구");
-
-            u2.addInterestKeywordContent("클라이밍");
-            u2.addInterestKeywordContent("마라톤");
-
             List <SiteUser> list = new ArrayList<>();
             list.add(u1);
             list.add(u2);
+            List<SiteUser> siteUsers = userRepository.saveAll(list); // 부모를 먼저 저장
 
-            List<SiteUser> siteUsers = userRepository.saveAll(list);
+            u1.addInterestKeywordContent("축구");
+            u1.addInterestKeywordContent("농구");
+
+            u2.addInterestKeywordContent("농구");
+            u2.addInterestKeywordContent("클라이밍");
+            u2.addInterestKeywordContent("마라톤");
+
+            userRepository.saveAll(list);
+
+
 
         };
     }
