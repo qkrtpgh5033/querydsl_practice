@@ -198,5 +198,18 @@ class UserRepositoryTests {
         
     }
 
+    @Test
+    @Rollback(false)
+    @DisplayName("축구에 관심이 있는 회원을 검색할 수 있다. (queryDsl 없이)")
+    void t12(){
+
+        List<SiteUser> list = userRepository.findByInterestKeywords_content("축구");
+        System.out.println(list.size());
+        for (SiteUser findUser : list) {
+            System.out.println("findUser.getUsername() = " + findUser.getUsername());
+        }
+
+    }
+
 }
 

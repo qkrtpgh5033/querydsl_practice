@@ -3,6 +3,7 @@ import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,9 @@ public class SiteUser {
     private Set<InterestKeyword> interestKeywords = new HashSet<>();
 
     public void addInterestKeywordContent(String keywordContent) {
+
         interestKeywords.add(new InterestKeyword(keywordContent));
+//        if(!interestKeywords.contains(new InterestKeyword(keywordContent)))
+//            System.out.println("hello");
     }
 }
