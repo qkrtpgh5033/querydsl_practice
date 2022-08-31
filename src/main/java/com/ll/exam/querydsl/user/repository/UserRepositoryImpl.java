@@ -1,5 +1,6 @@
 package com.ll.exam.querydsl.user.repository;
 
+import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import com.ll.exam.querydsl.user.entity.QSiteUser;
 import com.ll.exam.querydsl.user.entity.SiteUser;
 import com.querydsl.core.types.Order;
@@ -110,6 +111,17 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         // return new PageImpl<>(users, pageable, usersQuery.fetchCount()); // 아래와 거의 동일
 
         return PageableExecutionUtils.getPage(users, pageable, usersQuery::fetchCount);
+    }
+
+    @Override
+    public List<SiteUser> searchInterest(String interest) {
+        List<SiteUser> find = jpaQueryFactory
+                .select(qSiteUser)
+                .from(qSiteUser)
+                .where(qSiteUser.interestKeywords.contains(new InterestKeyword(interest)))
+                .fetch();
+
+        return find;
     }
 
 

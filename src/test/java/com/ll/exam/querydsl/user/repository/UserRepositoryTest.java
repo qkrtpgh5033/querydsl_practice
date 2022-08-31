@@ -184,5 +184,19 @@ class UserRepositoryTests {
         userRepository.save(user);
         // 엔티티 클래스 InterestKeyword
     }
+
+    @Test
+    @Rollback(false)
+    @DisplayName("축구에 관심이 있는 회원을 검색할 수 있다.")
+    void t11(){
+
+        List<SiteUser> list = userRepository.searchInterest("축구");
+        System.out.println(list.size());
+        for (SiteUser findUser : list) {
+            System.out.println("findUser.getUsername() = " + findUser.getUsername());
+        }
+        
+    }
+
 }
 
