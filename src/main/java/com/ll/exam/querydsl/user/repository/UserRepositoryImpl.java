@@ -132,13 +132,13 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 //                .where(qSiteUser.interestKeywords.contains(new InterestKeyword(interest)))
 //                .fetch();
 
-        QInterestKeyword IK = new QInterestKeyword("IK"); // AS 역할
+//        QInterestKeyword IK = new QInterestKeyword("IK"); // AS 역할
         List<SiteUser> find = jpaQueryFactory
                 .select(qSiteUser)
                 .from(qSiteUser)
-                .innerJoin(qSiteUser.interestKeywords, IK)
+                .innerJoin(qSiteUser.interestKeywords, QInterestKeyword.interestKeyword)
                 .where(
-                        IK.content.eq(interest))
+                        QInterestKeyword.interestKeyword.content.eq(interest))
                 .fetch();
 
         return find;
