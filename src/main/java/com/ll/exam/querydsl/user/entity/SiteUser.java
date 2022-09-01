@@ -44,6 +44,11 @@ public class SiteUser {
 
     //u1.follow(u2); ul -> u2를 팔로우 한다.
     public void follow(SiteUser following) {
+        if (following.getId() == getId())
+            return;
+        if (following == null)
+            return;
+
         following.getFollowers().add(this);
     }
 }

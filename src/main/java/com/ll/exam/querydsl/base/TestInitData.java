@@ -43,6 +43,9 @@ public class TestInitData {
             u2.addInterestKeywordContent("클라이밍");
             u2.addInterestKeywordContent("마라톤");
 
+//            u2.follow(u1);
+//            u1.follow(u2);
+
             userRepository.saveAll(list);
 
 
