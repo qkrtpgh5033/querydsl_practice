@@ -202,7 +202,6 @@ class UserRepositoryTests {
     @Rollback(false)
     @DisplayName("축구에 관심이 있는 회원을 검색할 수 있다. (queryDsl 없이)")
     void t12(){
-
         List<SiteUser> list = userRepository.findByInterestKeywords_content("축구");
         System.out.println(list.size());
         for (SiteUser findUser : list) {
@@ -211,5 +210,21 @@ class UserRepositoryTests {
 
     }
 
+
+    @Test
+    @Rollback(false)
+    @DisplayName("u2 = 아이돌, u1=팬, u1은 u2의 팔로워 이다.")
+    void t13(){
+
+        SiteUser u1 = userRepository.getQslUser(1L);
+        SiteUser u2 = userRepository.getQslUser(2L);
+
+        u2.addFollower(u1);
+
+        userRepository.save(u2);
+
+
+
+    }
 }
 

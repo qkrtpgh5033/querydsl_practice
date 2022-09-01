@@ -1,5 +1,6 @@
 package com.ll.exam.querydsl.base;
 
+import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import com.ll.exam.querydsl.user.entity.SiteUser;
 import com.ll.exam.querydsl.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
