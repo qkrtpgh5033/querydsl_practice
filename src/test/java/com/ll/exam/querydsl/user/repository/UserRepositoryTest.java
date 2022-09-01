@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -235,5 +236,32 @@ class UserRepositoryTests {
         u1.follow(u1);
         assertThat(u1.getFollowers().size()).isEqualTo(0);
     }
+
+    @Test
+    @Rollback(false)
+    void t15(){
+        SiteUser u1 = userRepository.getQslUser(1L);
+        SiteUser u2 = userRepository.getQslUser(2L);
+        u1.follow(u2);
+
+        Set<SiteUser> u1Followers = u1.getFollowers();
+        Set<SiteUser> u1followings = u1.getFollowings();
+
+        Set<SiteUser> u2Followers = u2.getFollowers();
+        Set<SiteUser> u2Followings = u2.getFollowings();
+        System.out.println("u1Followers.size() = " + u1Followers.size());
+        System.out.println("u1followings.size() = " + u1followings.size());
+        System.out.println("u2followings.size() = " + u2Followers.size());
+        System.out.println("u2followings.size() = " + u2Followings.size());
+
+        assertThat(u1.getFollowers().size()).isEqualTo(0);
+        assertThat(u1.getFollowings().size()).isEqualTo(1);
+
+
+        assertThat(u2.getFollowers().size()).isEqualTo(1);
+        assertThat(u2.getFollowings().size()).isEqualTo(0);
+
+    }
+
 }
 

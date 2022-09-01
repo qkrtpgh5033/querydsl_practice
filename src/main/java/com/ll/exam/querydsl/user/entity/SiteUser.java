@@ -34,6 +34,9 @@ public class SiteUser {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<SiteUser> followers = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<SiteUser> followings = new HashSet<>();
+
 
     public void addInterestKeywordContent(String keywordContent) {
 
@@ -50,5 +53,8 @@ public class SiteUser {
             return;
 
         following.getFollowers().add(this);
+        followings.add(following);
+
     }
+
 }
