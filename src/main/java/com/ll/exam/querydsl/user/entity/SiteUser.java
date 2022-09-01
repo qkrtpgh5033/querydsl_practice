@@ -42,7 +42,8 @@ public class SiteUser {
 //            System.out.println("hello");
     }
 
-    public void addFollower(SiteUser follower) {
-        followers.add(follower);
+    //u1.follow(u2); ul -> u2를 팔로우 한다.
+    public void follow(SiteUser following) {
+        following.getFollowers().add(this);
     }
 }

@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return jpaQueryFactory
                 .select(qSiteUser)
                 .from(qSiteUser)
-                .where(qSiteUser.id.eq(1L))
+                .where(qSiteUser.id.eq(id))
                 .fetchOne();
     }
 
