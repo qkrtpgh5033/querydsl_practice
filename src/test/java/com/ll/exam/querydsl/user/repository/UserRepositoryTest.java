@@ -1,6 +1,7 @@
 package com.ll.exam.querydsl.user.repository;
 
 
+import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import com.ll.exam.querydsl.user.entity.SiteUser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +54,7 @@ class UserRepositoryTests {
     @DisplayName("모든 회원의 수")
     void count() {
         Long qslCount = userRepository.getQslCount();
-        assertThat(qslCount).isEqualTo(4);
+        assertThat(qslCount).isEqualTo(2);
 
     }
 
@@ -262,6 +263,50 @@ class UserRepositoryTests {
         assertThat(u2.getFollowings().size()).isEqualTo(0);
 
     }
+
+    @Test
+    @Rollback(value = false)
+    @DisplayName("u1 회원이 농구에 더 이상 관심이 없다.")
+    void t16(){
+        SiteUser u1 = userRepository.getQslUser(1L);
+
+
+        u1.removeInterestKeywordContent("농구");
+
+    }
+
+
+    @Test
+    @Rollback(value = false)
+    @DisplayName("내가 팔로우 하고 있는 사람이 좋아하는 키워드 전부 가져오기 queryDsl")
+    void t17(){
+        List<InterestKeyword> interestKeywords = userRepository.followUserOfInterestKeyword(7L);
+        for (InterestKeyword keyword : interestKeywords) {
+            System.out.println("keyword = " + keyword.getContent());
+        }
+
+
+    }
+
+    @Test
+    @Rollback(value = false)
+    @DisplayName("내가 팔로우 하고 있는 사람이 좋아하는 키워드 전부 가져오기 jpa")
+    void t18(){
+        SiteUser u1 = userRepository.getQslUser(7L);
+        Set<SiteUser> followings = u1.getFollowings();
+        for (SiteUser following : followings) {
+            System.out.println("following id= " + following.getId());
+
+            Set<InterestKeyword> interestKeywords = following.getInterestKeywords();
+
+            for (InterestKeyword interestKeyword : interestKeywords) {
+                System.out.println("interestKeyword Content= " + interestKeyword.getContent());
+            }
+        }
+
+
+    }
+
 
 }
 

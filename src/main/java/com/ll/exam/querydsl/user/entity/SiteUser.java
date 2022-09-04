@@ -1,4 +1,5 @@
 package com.ll.exam.querydsl.user.entity;
+
 import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import lombok.*;
 
@@ -27,34 +28,34 @@ public class SiteUser {
     private String email;
 
     @Builder.Default
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Set<InterestKeyword> interestKeywords = new HashSet<>();
 
     @Builder.Default
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<SiteUser> followers = new HashSet<>();
 
+    @Builder.Default
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<SiteUser> followings = new HashSet<>();
 
-
     public void addInterestKeywordContent(String keywordContent) {
-
-        interestKeywords.add(new InterestKeyword(keywordContent));
-//        if(!interestKeywords.contains(new InterestKeyword(keywordContent)))
-//            System.out.println("hello");
+        interestKeywords.add(new InterestKeyword(this, keywordContent));
     }
 
-    //u1.follow(u2); ul -> u2를 팔로우 한다.
+    public void removeInterestKeywordContent(String keywordContent){
+        interestKeywords.remove(new InterestKeyword(this, keywordContent));
+    }
+
     public void follow(SiteUser following) {
-        if (following.getId() == getId())
-            return;
-        if (following == null)
-            return;
+        if (this == following) return;
+        if (following == null) return;
+        if (this.getId() == following.getId()) return;
 
+        // 유튜버(following)이 나(follower)를 구독자로 등록
         following.getFollowers().add(this);
-        followings.add(following);
 
+        // 내(follower)가 유튜버(following)를 구독한다.
+        getFollowings().add(following);
     }
-
 }

@@ -18,7 +18,9 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Set;
 
+import static com.ll.exam.querydsl.interestkeyword.entity.QInterestKeyword.*;
 import static com.ll.exam.querydsl.user.entity.QSiteUser.siteUser;
 
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
     QSiteUser qSiteUser = siteUser;
+    QInterestKeyword interestKeyword = QInterestKeyword.interestKeyword;
     @Override
     public SiteUser getQslUser(Long id) {
         /*
@@ -143,6 +146,39 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return find;
     }
+
+    // 내가 팔로우 하고 있는 사람이 좋아하는 키워드 전부 가져오기
+
+    /**
+     SELECT DISTINCT IK.content
+     FROM interest_keyword AS IK
+     INNER JOIN site_user_followings AS SUF
+     ON IK.user_id = SUF.followings_id
+     WHERE SUF.site_user_id = 8;
+     */
+    @Override
+    public List<InterestKeyword> followUserOfInterestKeyword(Long id) {
+
+        SiteUser user = getQslUser(id);
+        List<InterestKeyword> fetch = jpaQueryFactory
+                .select(interestKeyword)
+                .from(interestKeyword)
+                .innerJoin(interestKeyword.user, siteUser)
+                .where(interestKeyword.user.in(user.getFollowings()))
+                .fetch();
+
+        return fetch;
+
+    }
+
+//    @Override
+//    public void removeInterest(SiteUser user, String keyword) {
+//        jpaQueryFactory
+//                .delete(qSiteUser)
+//                .where(qSiteUser.id.eq(user.getId()).and(qSiteUser.interestKeywords.contains(new InterestKeyword())))
+//                .execute();
+//
+//    }
 
 
 }

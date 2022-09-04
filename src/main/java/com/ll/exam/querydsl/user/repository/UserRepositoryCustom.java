@@ -1,5 +1,6 @@
 package com.ll.exam.querydsl.user.repository;
 
+import com.ll.exam.querydsl.interestkeyword.entity.InterestKeyword;
 import com.ll.exam.querydsl.user.entity.SiteUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,5 +21,7 @@ public interface UserRepositoryCustom {
     Page<SiteUser> searchQsl(String kw, Pageable pageable);
 
     List<SiteUser> searchInterest(String interest);
+
+    List<InterestKeyword> followUserOfInterestKeyword(Long id);
 
 }
