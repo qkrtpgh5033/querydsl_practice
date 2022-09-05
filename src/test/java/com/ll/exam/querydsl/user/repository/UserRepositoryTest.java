@@ -280,9 +280,9 @@ class UserRepositoryTests {
     @Rollback(value = false)
     @DisplayName("내가 팔로우 하고 있는 사람이 좋아하는 키워드 전부 가져오기 queryDsl")
     void t17(){
-        List<InterestKeyword> interestKeywords = userRepository.followUserOfInterestKeyword(7L);
-        for (InterestKeyword keyword : interestKeywords) {
-            System.out.println("keyword = " + keyword.getContent());
+        List<String> interestKeywords = userRepository.followUserOfInterestKeyword(7L);
+        for (String keyword : interestKeywords) {
+            System.out.println("keyword = " + keyword);
         }
 
 

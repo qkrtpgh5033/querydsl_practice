@@ -157,11 +157,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
      WHERE SUF.site_user_id = 8;
      */
     @Override
-    public List<InterestKeyword> followUserOfInterestKeyword(Long id) {
+    public List<String> followUserOfInterestKeyword(Long id) {
 
         SiteUser user = getQslUser(id);
-        List<InterestKeyword> fetch = jpaQueryFactory
-                .select(interestKeyword)
+        List<String> fetch = jpaQueryFactory
+                .select(interestKeyword.content).distinct()
                 .from(interestKeyword)
                 .innerJoin(interestKeyword.user, siteUser)
                 .where(interestKeyword.user.in(user.getFollowings()))

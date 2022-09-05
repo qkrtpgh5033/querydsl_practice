@@ -22,6 +22,6 @@ public interface UserRepositoryCustom {
 
     List<SiteUser> searchInterest(String interest);
 
-    List<InterestKeyword> followUserOfInterestKeyword(Long id);
+    List<String> followUserOfInterestKeyword(Long id);
 
 }
